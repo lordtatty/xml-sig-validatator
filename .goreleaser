@@ -1,16 +1,16 @@
-builds:
-  - binary: xml-sig-validator
-    goos:
-      - darwin
-      - linux
-    goarch:
-      - amd64
-      - arm64
-    env:
-      - CGO_ENABLED=0
+# builds:
+#   - binary: xml-sig-validator
+#     goos:
+#       - darwin
+#       - linux
+#     goarch:
+#       - amd64
+#       - arm64
+#     env:
+#       - CGO_ENABLED=0
 
-release:
-  prerelease: auto
+# release:
+#   prerelease: auto
 
 brews:
   - name: xml-sig-validator
