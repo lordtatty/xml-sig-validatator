@@ -1,0 +1,23 @@
+builds:
+  - binary: xml-sig-validator
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    env:
+      - CGO_ENABLED=0
+
+release:
+  prerelease: auto
+
+brews:
+  - name: xml-sig-validator
+    homepage: "https://github.com/lordtatty/xml-sig-validator"
+    tap:
+      owner: lordtatty
+      name: xml-sig-validator
+
+checksum:
+  name_template: "checksums.txt"
