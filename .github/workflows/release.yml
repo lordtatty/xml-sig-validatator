@@ -27,4 +27,5 @@ jobs:
           version: ${{ env.GITHUB_REF_NAME }}
           args: release --rm-dist
         env:
-          GITHUB_TOKEN: ${{ secrets.GORELEASER_GITHUB_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAP_REPO_GITHUB_PAT: ${{ secrets.GORELEASER_GITHUB_PAT }}
