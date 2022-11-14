@@ -17,7 +17,7 @@ brews:
     homepage: "https://github.com/lordtatty/xml-sig-validator"
     tap:
       owner: lordtatty
-      name: xml-sig-validator
+      name: homebrew-tools
 
 checksum:
   name_template: "checksums.txt"
