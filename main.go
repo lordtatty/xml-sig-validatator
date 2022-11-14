@@ -1,39 +1,30 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"io"
 	"log"
 	"net/http"
+	"net/url"
+	"os"
 
 	"github.com/ma314smith/signedxml"
 )
 
 // Validate an enveloped xml signature
 func main() {
-	// command line flag for url
-	url := flag.String("url", "https://www.w3.org/TR/xmldsig-core/xml-stylesheet.txt", "url to validate")
-	flag.Parse()
-
-	if *url == "" {
-		log.Fatal("--url is required")
+	if len(os.Args) < 2 {
+		log.Fatal("URL or filepath required as the first argument")
 	}
 
-	fmt.Println("Checking url:", *url)
+	path := os.Args[1]
 
-	// Download the xml file
-	resp, err := http.Get(*url)
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer resp.Body.Close()
-	xml, err := io.ReadAll(resp.Body)
+	xml, err := BodyOf(path)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Validate the xml file
+	// Validate the xml
 	_, err = Validate(xml)
 	if err != nil {
 		log.Println("SIGNATURE FAILED to validate")
@@ -53,4 +44,36 @@ func Validate(xml []byte) (bool, error) {
 		return false, err
 	}
 	return true, nil
+}
+
+func BodyOf(path string) ([]byte, error) {
+	if IsUrl(path) {
+		return XMLFromUrl(path)
+	}
+	return XMLFromFile(path)
+}
+
+// get xm from file
+func XMLFromFile(path string) ([]byte, error) {
+	xml, err := os.ReadFile(path)
+	if err != nil {
+		return nil, err
+	}
+	return xml, nil
+}
+
+// get body as bytes from url
+func XMLFromUrl(url string) ([]byte, error) {
+	resp, err := http.Get(url)
+	if err != nil {
+		return nil, err
+	}
+	defer resp.Body.Close()
+	return io.ReadAll(resp.Body)
+}
+
+// Is valid url
+func IsUrl(str string) bool {
+	u, err := url.Parse(str)
+	return err == nil && u.Scheme != "" && u.Host != ""
 }
