@@ -36,7 +36,9 @@ func main() {
 	}
 
 	if len(os.Args) < 2 {
-		log.Fatal("URL or filepath required as the first argument")
+		fmt.Println("URL or filepath required as the first argument")
+		fmt.Println("Or use --version to print version and build info")
+		return
 	}
 
 	path := os.Args[1]
