@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -11,8 +12,30 @@ import (
 	"github.com/ma314smith/signedxml"
 )
 
+// Supplied by goreleaser https://goreleaser.com/cookbooks/using-main.version
+var (
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
+)
+
+func verStr() string {
+	if version == "dev" {
+		return "Local development build"
+	}
+	return fmt.Sprintf("version: %s\ncommit: %s\nbuilt: at %s", version, commit, date)
+}
+
 // Validate an enveloped xml signature
 func main() {
+	// if "--version" is supplied, print version and exit
+	verFlag := flag.Bool("version", false, "print version and exit")
+	flag.Parse()
+	if *verFlag {
+		fmt.Println(verStr())
+		return
+	}
+
 	if len(os.Args) < 2 {
 		log.Fatal("URL or filepath required as the first argument")
 	}
@@ -24,7 +47,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	// Validate the xml
 	_, err = Validate(xml)
 	if err != nil {
 		log.Println("SIGNATURE FAILED to validate")
