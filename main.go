@@ -26,7 +26,6 @@ func verStr() string {
 	return fmt.Sprintf("version: %s\ncommit: %s\nbuilt: at %s", version, commit, date)
 }
 
-// Validate an enveloped xml signature
 func main() {
 	// if "--version" is supplied, print version and exit
 	verFlag := flag.Bool("version", false, "print version and exit")
@@ -55,7 +54,6 @@ func main() {
 	fmt.Println("Signature is Valid")
 }
 
-// validate the xml file
 func Validate(xml []byte) (bool, error) {
 	v, err := signedxml.NewValidator(string(xml))
 	if err != nil {
@@ -75,7 +73,6 @@ func BodyOf(path string) ([]byte, error) {
 	return XMLFromFile(path)
 }
 
-// get xm from file
 func XMLFromFile(path string) ([]byte, error) {
 	xml, err := os.ReadFile(path)
 	if err != nil {
@@ -84,7 +81,6 @@ func XMLFromFile(path string) ([]byte, error) {
 	return xml, nil
 }
 
-// get body as bytes from url
 func XMLFromUrl(url string) ([]byte, error) {
 	resp, err := http.Get(url)
 	if err != nil {
@@ -94,7 +90,6 @@ func XMLFromUrl(url string) ([]byte, error) {
 	return io.ReadAll(resp.Body)
 }
 
-// Is valid url
 func IsUrl(str string) bool {
 	u, err := url.Parse(str)
 	return err == nil && u.Scheme != "" && u.Host != ""

@@ -7,9 +7,9 @@ before:
     # you may remove this if you don't need go generate
     # - go generate ./...
 builds:
-  - binary: xml-sig-validator
   - env:
       - CGO_ENABLED=0
+    binary: xml-sig-validator
     goos:
       - linux
       # - windows
