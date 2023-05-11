@@ -33,10 +33,10 @@ changelog:
       - "^test:"
 brews:
   - name: xml-sig-validator
-    homepage: "https://github.com/lordtatty/homebrew-tools"
+    homepage: "https://github.com/lordtatty/homebrew-tools-private"
     tap:
       owner: lordtatty
-      name: homebrew-tools
+      name: homebrew-tools-private
       token: "{{ .Env.HOMEBREW_TAP_GITHUB_TOKEN }}"
 # modelines, feel free to remove those if you don't want/use them:
 # yaml-language-server: $schema=https://goreleaser.com/static/schema.json
